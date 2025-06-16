@@ -12,6 +12,7 @@ class DataCenter:
     """
     def __init__(self, num_gpus: int):
         self.gpus = [GPU(i) for i in range(num_gpus)]
+        self.gpus_in_use = []
         self.job_queue = []
         self.thermal_reservoir = 0.0     
         self.reuse_threshold = 100.0    
@@ -20,5 +21,6 @@ class DataCenter:
         gpu = self.gpus[gpu_id]
         if not gpu.current_job:
             gpu.current_job = job 
+            self.gpus_in_use.append(gpu)
             return True 
         return False 

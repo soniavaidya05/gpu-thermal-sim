@@ -9,6 +9,8 @@ class GPU:
     def step(self):
         if self.current_job:
             self.heat += self.current_job.thermal_output 
+            return self.current_job.thermal_output 
         else:
             self.heat -= self.cooling_rate
             self.heat = max(self.heat, 0.0) # amount of thermal energy can't be <0
+            return 0 
