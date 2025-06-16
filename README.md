@@ -1,2 +1,2 @@
 # gpu-thermal-sim
-Use reinforcement learning to optimize the scheduling of compute jobs at a simulated AI data centre, such that the thermal energy they generate can be re-captured to power future compute jobs.
+This project simulates how large AI data centers can reuse GPU-generated heat by scheduling jobs more intelligently. Each job uses power and generates heat. A reinforcement learning agent learns how to batch and time jobs to maximize thermal energy recovery, while keeping GPUs efficient and job delays low. The goal is to make AI compute more sustainable by design.
