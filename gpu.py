@@ -1,4 +1,12 @@
 class GPU:
+    """
+    Attributes:
+    - id: integer representing the GPU
+    - current_job: whether the GPU is currently running a job (bool)
+    - heat: accumulated thermal energy in the GPU
+    - cooling_rate: cooling rate of GPU
+    - max_temp: maximum safe operating temperature for a GPU
+    """
     def __init__(self, id):
         self.id = id
         self.current_job = None 
