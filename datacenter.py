@@ -24,7 +24,12 @@ class DataCenter:
             gpu.in_use = True
             gpu.current_job = job 
             self.gpus_in_use.append(gpu)
+
+            if job in self.job_queue:
+                self.job_queue.remove(job)
+
             return True 
+        
         print("GPU {gpu_id} is already in use! Choose a different GPU.")
         return False 
     
@@ -40,3 +45,6 @@ class DataCenter:
         print(f"Reused {reused:.2f} units of energy using ORC.")
         self.thermal_reservoir = 0.0    # Note: the rest of the energy is wasted (but can be used to power other things)
         return reused
+    
+    def schedule_jobs(self):
+        ...
