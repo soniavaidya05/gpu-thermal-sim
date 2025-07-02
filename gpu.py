@@ -26,6 +26,7 @@ class GPU:
                 print(f"Job {self.current_job.id} completed on GPU {self.id}")
                 self.in_use = False 
                 self.current_job = None
+                return -1
 
             return heat_generated
         

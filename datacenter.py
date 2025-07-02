@@ -1,6 +1,7 @@
 # Imports
 from gpu import GPU
 from job import Job
+from datastructures import PriorityQueue
 
 class DataCenter:
     """
@@ -13,10 +14,16 @@ class DataCenter:
     def __init__(self, num_gpus: int):
         self.gpus = [GPU(i) for i in range(num_gpus)]
         self.gpus_in_use = []
-        self.job_queue = []
+        self.job_queue = PriorityQueue()
         self.thermal_reservoir = 0.0     
         self.reuse_threshold = 50.0    
         self.reused_energy = 0.0
+    
+    def job_queue_from_list(self, job_list):
+        self.job_queue.build_heap(job_list)
+    
+    def add_job_to_queue(self, job):
+        self.job_queue.push(job)
     
     def assign_job(self, job: Job, gpu_id):
         gpu = self.gpus[gpu_id]
@@ -25,8 +32,8 @@ class DataCenter:
             gpu.current_job = job 
             self.gpus_in_use.append(gpu)
 
-            if job in self.job_queue:
-                self.job_queue.remove(job)
+            if self.job_queue.contains(job):
+                self.job_queue.remove_by_id(job.id)
 
             return True 
         

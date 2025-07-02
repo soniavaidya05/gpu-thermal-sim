@@ -23,9 +23,8 @@ samplejob2 = Job(
     thermal_output=3.0       # lower heat output
 )
 
-# Add jobs to queue
-data_center.job_queue.append(samplejob1)
-data_center.job_queue.append(samplejob2)
+data_center.add_job_to_queue(samplejob1)
+data_center.add_job_to_queue(samplejob2)
 
 # Assign jobs to arbitrary GPUs
 # Assume a GPU can do only ONE job at a time
@@ -40,12 +39,15 @@ for t in range(15):
         data_center.thermal_reservoir += heat
         if gpu.current_job != None:
             print(f"GPU {gpu.id} | Heat: {gpu.heat:.2f} | Job: {gpu.current_job.id if gpu.current_job else 'None'}")
-    
+
     if len(data_center.gpus_in_use) != 0:
         print(f"Thermal Reservoir: {data_center.thermal_reservoir:.2f}")
 
     if data_center.reuse_thermal_energy() > 0:
         print(f"\nTotal reusable energy recovered: {data_center.reused_energy:.2f}")
+    
+    if heat == -1:
+        data_center.job_queue.pop()
     
     # Update the list of GPUs in use in case some jobs are finished
     data_center.gpus_in_use = [gpu for gpu in data_center.gpus_in_use if gpu.current_job]
